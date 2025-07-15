@@ -1842,6 +1842,18 @@
             "en": "Disable the Unraid server toggle when the device card is pressed",
             "it": "Disabilita l'interruttore del server Unraid quando viene premuta la scheda del dispositivo"
           }
+        },
+        {
+          "id": "disksOffset",
+          "type": "number",
+          "label": {
+            "en": "Disks offset"
+          },
+          "value": 0,
+          "min": 0,
+          "hint": {
+            "en": "If the number of active disks in Homey does not show zero when you know that the Unraid server's hard disks are all spun down; use this setting to adjust. E.g. if Homey shows 2 active disks when all disks are spun down, adjust this setting to 2. Usually this will be equal to the number of SSDs in your Unraid server. Default: 0"
+          }
         }
       ]
     }

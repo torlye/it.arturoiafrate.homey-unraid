@@ -380,10 +380,13 @@ class UnraidRemoteDevice extends Homey.Device {
     if(oldRamUsedValue != value) this._flowTriggers?.triggerRamUsageFlowCard(this, value);
   }
 
-  _updateDisksActiveCapability(value : number) : void{
+  _updateDisksActiveCapability(rawValue: number): void {
+    const offset = this.getSetting('disksOffset')
+    const adjustedValue = (typeof offset === 'number' && !isNaN(offset)) ?
+     rawValue = Math.max(0, rawValue - offset) : rawValue;
     const oldValue : number = this.hasCapability('disksactive') ? this.getCapabilityValue('disksactive') : 0;
-    this.setCapabilityValue("disksactive", value);//.catch(this.error);
-    if(oldValue != value) this._flowTriggers?.triggerDisksActiveFlowCard(this, value);
+    this.setCapabilityValue("disksactive", adjustedValue);//.catch(this.error);
+    if(oldValue != adjustedValue) this._flowTriggers?.triggerDisksActiveFlowCard(this, adjustedValue);
   }
 
   async _turnOn(){
