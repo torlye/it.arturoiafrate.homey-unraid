@@ -1,0 +1,21 @@
+{
+    "title": {
+        "en": "The number of active disks is !{{over|under}}"
+    },
+    "titleFormatted": {
+        "en": "The number of active disks is !{{over|under}} [[active-disks]]"
+    },
+    "hint": {
+        "en": "The number of active (spinning) disks is over or under a threshold"
+    },
+    "args": [
+        {
+            "type": "number",
+            "name": "active-disks",
+            "title": {
+                "en": "Active disks"
+            },
+            "example": 5
+        }
+    ]
+}

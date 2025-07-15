@@ -323,6 +323,7 @@ class UnraidRemoteDevice extends Homey.Device {
     if(systemStats.arrayUsage) this._updateArrayUsedCapability(systemStats.arrayUsage.percentUsed);
     if(systemStats.cacheUsage) this._updateCacheUsedCapability(systemStats.cacheUsage.percentUsed);
     if(systemStats.ramUsage) this._updateRamUsedCapability(systemStats.ramUsage.percentUsed);
+    if(systemStats.diskStatus) this._updateDisksActiveCapability(systemStats.diskStatus.disksSpinning);
     if(this._enableDockerMonitoring){
       this._flowTriggers?.triggerDockerContainerStatusChangedFlowCard(this, await this.containerList(), this.homey.app as UnraidRemoteApp);
     }

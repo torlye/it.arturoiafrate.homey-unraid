@@ -65,3 +65,8 @@ export interface SmartctlResult {
         protocol: "ATA" | "SCSI" | "NVMe";
     }
 }
+
+export interface DisksInfo {
+    disks: number;
+    disksSpinning: number;
+}

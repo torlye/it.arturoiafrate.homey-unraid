@@ -1,0 +1,12 @@
+{
+    "type": "number",
+    "title": {
+        "en": "Number of disks active (spinning)"
+    },
+    "getable": true,
+    "setable": false,
+    "insights": true,
+    "decimals": 0,
+    "uiComponent": "sensor",
+    "icon": "/assets/capabilities/array.svg"
+}

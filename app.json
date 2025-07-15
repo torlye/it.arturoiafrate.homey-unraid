@@ -223,6 +223,28 @@
       },
       {
         "title": {
+          "en": "The number of active disks is !{{over|under}}"
+        },
+        "titleFormatted": {
+          "en": "The number of active disks is !{{over|under}} [[active-disks]]"
+        },
+        "hint": {
+          "en": "The number of active (spinning) disks is over or under a threshold"
+        },
+        "args": [
+          {
+            "type": "number",
+            "name": "active-disks",
+            "title": {
+              "en": "Active disks"
+            },
+            "example": 5
+          }
+        ],
+        "id": "disks-active-condition"
+      },
+      {
+        "title": {
           "en": "The file !{{exists|doesn't exist}}",
           "it": "Il file !{{esiste|non esiste}}",
           "fr": "Le fichier !{{existe|n'existe pas}}"
@@ -1583,7 +1605,7 @@
           "en": "The number of active disks has changed"
         },
         "titleFormatted": {
-          "en": "The number of active disks is [[active-disks]]"
+          "en": "The number of active disks has changed"
         },
         "hint": {
           "en": "This flow is triggered when the number of active (spinning) disks has changed"
@@ -1889,6 +1911,18 @@
       },
       "icon": "/assets/capabilities/cpu.svg"
     },
+    "disksactive": {
+      "type": "number",
+      "title": {
+        "en": "Number of disks active (spinning)"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": true,
+      "decimals": 0,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/array.svg"
+    },
     "friendlyUptime": {
       "type": "string",
       "title": {
@@ -1953,18 +1987,6 @@
       },
       "decimals": 2,
       "uiComponent": null
-    },
-    "disksactive": {
-      "type": "number",
-      "title": {
-        "en": "Number of disks active (spinning)"
-      },
-      "getable": true,
-      "setable": false,
-      "insights": true,
-      "decimals": 0,
-      "uiComponent": "sensor",
-      "icon": "/assets/capabilities/array.svg"
     }
   }
 }

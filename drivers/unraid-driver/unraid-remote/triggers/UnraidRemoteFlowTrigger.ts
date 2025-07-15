@@ -46,8 +46,8 @@ class UnraidRemoteFlowTrigger {
         this._ramUsageIsChangedTriggerCard?.trigger(device, { 'usage-percent': ramUsage }, undefined);
     }
 
-    triggerDisksActiveFlowCard(device: Homey.Device,ramUsage: number){
-        this._disksActiveTriggerCard?.trigger(device, { 'active-disks': ramUsage }, undefined);
+    triggerDisksActiveFlowCard(device: Homey.Device, disksActive: number) {
+        this._disksActiveTriggerCard?.trigger(device, { 'active-disks': disksActive }, undefined);
     }
     
     async triggerDockerContainerStatusChangedFlowCard(device: Homey.Device, containers: Container[], appInstance? : UnraidRemoteApp){
