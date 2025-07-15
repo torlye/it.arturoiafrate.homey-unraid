@@ -34,6 +34,7 @@ class UnraidRemoteDevice extends Homey.Device {
       arrayUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('array-usage-is-changed'),
       cacheUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('cache-usage-is-changed'),
       ramUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('ram-usage-is-changed'),
+      disksActiveTriggerCard: this.homey.flow.getDeviceTriggerCard('disks-active-is-changed'),
       dockerContainerStatusChangedTriggerCard: this.homey.flow.getDeviceTriggerCard('docker-container-status-changed')
     });
     let settings = await this.getSettings();
@@ -377,6 +378,12 @@ class UnraidRemoteDevice extends Homey.Device {
     if(oldRamUsedValue != value) this._flowTriggers?.triggerRamUsageFlowCard(this, value);
   }
 
+  _updateDisksActiveCapability(value : number) : void{
+    const oldValue : number = this.hasCapability('disksactive') ? this.getCapabilityValue('disksactive') : 0;
+    this.setCapabilityValue("disksactive", value);//.catch(this.error);
+    if(oldValue != value) this._flowTriggers?.triggerDisksActiveFlowCard(this, value);
+  }
+
   async _turnOn(){
     const settings = await this.getSettings();
     if(isNonEmpty(settings.macaddress) && this._unraidRemote){
@@ -433,6 +440,9 @@ class UnraidRemoteDevice extends Homey.Device {
     }
     if (this.hasCapability('cpuused') === false) {
       await this.addCapability('cpuused');
+    }
+    if (this.hasCapability('disksactive') === false) {
+      await this.addCapability('disksactive');
     }
   }
 

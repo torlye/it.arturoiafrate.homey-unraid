@@ -11,6 +11,7 @@ import { UserScript } from './utils/IUserScript';
 import { VirtualMachine } from './utils/IVirtualMachine';
 import { IVMRebootModes, IVMShutdownModes, VMState } from '@ridenui/unraid/dist/modules/vms/vm';
 import { File, FileManager, Share, WriteMode } from '../file-manager/FileManager';
+import { LsblkResult, SmartctlResult } from './utils/Disks';
 
 class UnraidRemote {
     private _url: string;
@@ -662,6 +663,26 @@ class UnraidRemote {
             };
             return cpuUsage;
         } catch(error){
+            return undefined;
+        }
+    }
+
+    private async _getDisks(): Promise<any> {
+        try {
+            const lsblkResult = await this._unraid.system.lsblk() as LsblkResult;
+            const disks = lsblkResult.blockdevices.filter(b => b.type === 'disk');
+
+            const smartctlPromises: Promise<unknown>[] = [];
+
+            for (const disk of disks) {
+                // `-n standby` prevents smartctl from spinning up the disk if it is stopped.
+                smartctlPromises.push(this._unraid.system.smartctl({ deviceName: `-n standby /dev/${disk.name}`, all: false}));
+            }
+            const smartctlResults = await Promise.all(smartctlPromises) as SmartctlResult[];
+
+            // The number of disks that could be queried and are not spun down
+            const successCount = smartctlResults.filter(s => s.smartctl.exit_status === 0);
+        } catch (error) {
             return undefined;
         }
     }

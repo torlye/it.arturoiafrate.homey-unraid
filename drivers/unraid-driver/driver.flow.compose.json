@@ -141,6 +141,35 @@
       "args": []
     },
     {
+      "id": "disks-active-is-changed",
+      "title": {
+        "en": "The number of active disks has changed"
+      },
+      "titleFormatted": {
+        "en": "The number of active disks is [[active-disks]]"
+      },
+      "hint": {
+        "en": "This flow is triggered when the number of active (spinning) disks has changed"
+      },
+      "tokens": [
+        {
+          "name": "active-disks",
+          "type": "number",
+          "title": {
+            "en": "Active disks"
+          },
+          "example": 5
+        }
+      ],
+      "args": [
+        {
+          "type": "device",
+          "name": "device",
+          "filter": "driver_id=unraid-driver"
+        }
+      ]
+    },
+    {
       "id": "docker-container-status-changed",
       "title": {
         "en": "Docker container online status changed",
