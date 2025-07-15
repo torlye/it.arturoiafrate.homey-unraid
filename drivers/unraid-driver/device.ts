@@ -310,6 +310,7 @@ class UnraidRemoteDevice extends Homey.Device {
     this._updateArrayUsedCapability(0);
     this._updateCacheUsedCapability(0);
     this._updateRamUsedCapability(0);
+    this._updateDisksActiveCapability(0);
   }
 
   async _updateDeviceCapabilities(systemStats : ISystemStats, setInfo : boolean) : Promise<void>{

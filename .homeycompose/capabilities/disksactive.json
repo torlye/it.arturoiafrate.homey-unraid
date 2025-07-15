@@ -1,7 +1,7 @@
 {
     "type": "number",
     "title": {
-        "en": "Number of disks active (spinning)"
+        "en": "Disks active (spinning)"
     },
     "getable": true,
     "setable": false,
