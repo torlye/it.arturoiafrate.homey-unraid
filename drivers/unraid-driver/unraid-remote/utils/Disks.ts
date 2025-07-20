@@ -67,6 +67,13 @@ export interface SmartctlResult {
 }
 
 export interface DisksInfo {
+    /**
+     * The total number of disks detected in the system
+     */
     disks: number;
+
+    /**
+     * The number of disks that are active (spinning)
+     */
     disksSpinning: number;
 }

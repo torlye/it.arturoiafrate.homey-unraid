@@ -685,7 +685,7 @@ class UnraidRemote {
             const successCount = smartctlResults.filter(s => s.smartctl.exit_status === 0).length;
 
             // The number of disks with exist status 2. This appears to indicate the number of spun down disks
-            const error2Count = smartctlResults.filter(s => s.smartctl.exit_status === 2).length
+            const error2Count = smartctlResults.filter(s => s.smartctl.exit_status === 2).length;
 
             return {
                 disks: successCount + error2Count,

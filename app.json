@@ -1930,7 +1930,7 @@
       },
       "getable": true,
       "setable": false,
-      "insights": true,
+      "insights": false,
       "decimals": 0,
       "uiComponent": "sensor",
       "icon": "/assets/capabilities/array.svg"
