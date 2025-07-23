@@ -223,6 +223,28 @@
       },
       {
         "title": {
+          "en": "The number of active disks is !{{over|under}}"
+        },
+        "titleFormatted": {
+          "en": "The number of active disks is !{{over|under}} [[active-disks]]"
+        },
+        "hint": {
+          "en": "The number of active (spinning) disks is over or under a threshold"
+        },
+        "args": [
+          {
+            "type": "number",
+            "name": "active-disks",
+            "title": {
+              "en": "Active disks"
+            },
+            "example": 5
+          }
+        ],
+        "id": "disks-active-condition"
+      },
+      {
+        "title": {
           "en": "The file !{{exists|doesn't exist}}",
           "it": "Il file !{{esiste|non esiste}}",
           "fr": "Le fichier !{{existe|n'existe pas}}"
@@ -1578,6 +1600,35 @@
         ]
       },
       {
+        "id": "disks-active-is-changed",
+        "title": {
+          "en": "The number of active disks has changed"
+        },
+        "titleFormatted": {
+          "en": "The number of active disks has changed"
+        },
+        "hint": {
+          "en": "This flow is triggered when the number of active (spinning) disks has changed"
+        },
+        "tokens": [
+          {
+            "name": "active-disks",
+            "type": "number",
+            "title": {
+              "en": "Active disks"
+            },
+            "example": 5
+          }
+        ],
+        "args": [
+          {
+            "type": "device",
+            "name": "device",
+            "filter": "driver_id=unraid-driver"
+          }
+        ]
+      },
+      {
         "id": "docker-container-status-changed",
         "title": {
           "en": "Docker container online status changed",
@@ -1648,7 +1699,8 @@
         "uptime",
         "arrayinfo",
         "arrayused",
-        "cacheused"
+        "cacheused",
+        "disksactive"
       ],
       "platforms": [
         "local"
@@ -1790,6 +1842,18 @@
             "en": "Disable the Unraid server toggle when the device card is pressed",
             "it": "Disabilita l'interruttore del server Unraid quando viene premuta la scheda del dispositivo"
           }
+        },
+        {
+          "id": "disksOffset",
+          "type": "number",
+          "label": {
+            "en": "Disks offset"
+          },
+          "value": 0,
+          "min": 0,
+          "hint": {
+            "en": "If the number of active disks in Homey does not show zero when you know that the Unraid server's hard disks are all spun down; use this setting to adjust. E.g. if Homey shows 2 active disks when all disks are spun down, adjust this setting to 2. Usually this will be equal to the number of SSDs in your Unraid server. Default: 0"
+          }
         }
       ]
     }
@@ -1858,6 +1922,18 @@
         "it": "%"
       },
       "icon": "/assets/capabilities/cpu.svg"
+    },
+    "disksactive": {
+      "type": "number",
+      "title": {
+        "en": "Disks active (spinning)"
+      },
+      "getable": true,
+      "setable": false,
+      "insights": false,
+      "decimals": 0,
+      "uiComponent": "sensor",
+      "icon": "/assets/capabilities/array.svg"
     },
     "friendlyUptime": {
       "type": "string",

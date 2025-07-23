@@ -34,6 +34,7 @@ class UnraidRemoteDevice extends Homey.Device {
       arrayUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('array-usage-is-changed'),
       cacheUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('cache-usage-is-changed'),
       ramUsageTriggerCard: this.homey.flow.getDeviceTriggerCard('ram-usage-is-changed'),
+      disksActiveTriggerCard: this.homey.flow.getDeviceTriggerCard('disks-active-is-changed'),
       dockerContainerStatusChangedTriggerCard: this.homey.flow.getDeviceTriggerCard('docker-container-status-changed')
     });
     let settings = await this.getSettings();
@@ -309,6 +310,7 @@ class UnraidRemoteDevice extends Homey.Device {
     this._updateArrayUsedCapability(0);
     this._updateCacheUsedCapability(0);
     this._updateRamUsedCapability(0);
+    this._updateDisksActiveCapability(0);
   }
 
   async _updateDeviceCapabilities(systemStats : ISystemStats, setInfo : boolean) : Promise<void>{
@@ -322,6 +324,7 @@ class UnraidRemoteDevice extends Homey.Device {
     if(systemStats.arrayUsage) this._updateArrayUsedCapability(systemStats.arrayUsage.percentUsed);
     if(systemStats.cacheUsage) this._updateCacheUsedCapability(systemStats.cacheUsage.percentUsed);
     if(systemStats.ramUsage) this._updateRamUsedCapability(systemStats.ramUsage.percentUsed);
+    if(systemStats.diskStatus) this._updateDisksActiveCapability(systemStats.diskStatus.disksSpinning);
     if(this._enableDockerMonitoring){
       this._flowTriggers?.triggerDockerContainerStatusChangedFlowCard(this, await this.containerList(), this.homey.app as UnraidRemoteApp);
     }
@@ -375,6 +378,15 @@ class UnraidRemoteDevice extends Homey.Device {
     const oldRamUsedValue : number = this.hasCapability('ramused') ? this.getCapabilityValue('ramused') : 0;
     this.setCapabilityValue("ramused", value);//.catch(this.error);
     if(oldRamUsedValue != value) this._flowTriggers?.triggerRamUsageFlowCard(this, value);
+  }
+
+  _updateDisksActiveCapability(rawValue: number): void {
+    const offset = this.getSetting('disksOffset')
+    const adjustedValue = (typeof offset === 'number' && !isNaN(offset)) ?
+     rawValue = Math.max(0, rawValue - offset) : rawValue;
+    const oldValue : number = this.hasCapability('disksactive') ? this.getCapabilityValue('disksactive') : 0;
+    this.setCapabilityValue("disksactive", adjustedValue);//.catch(this.error);
+    if(oldValue != adjustedValue) this._flowTriggers?.triggerDisksActiveFlowCard(this, adjustedValue);
   }
 
   async _turnOn(){
@@ -433,6 +445,9 @@ class UnraidRemoteDevice extends Homey.Device {
     }
     if (this.hasCapability('cpuused') === false) {
       await this.addCapability('cpuused');
+    }
+    if (this.hasCapability('disksactive') === false) {
+      await this.addCapability('disksactive');
     }
   }
 

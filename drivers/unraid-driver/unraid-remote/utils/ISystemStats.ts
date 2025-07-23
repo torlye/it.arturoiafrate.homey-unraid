@@ -1,5 +1,6 @@
 import { IDiskFreeReturn, ILoadAverage, IUptime } from '@ridenui/unraid/dist/modules/system/extensions';
 import { CPUUsage } from '@ridenui/unraid/dist/modules/system/extensions/cpu';
+import { DisksInfo } from './Disks';
 
 /* CPU Properties */
 interface ICPUUsage {
@@ -33,6 +34,7 @@ interface ISystemStats {
     ramUsage: IMemoryUsage | undefined;
     memoryUsage?: ILoadAverage | undefined;
     diskUsage?: IDiskFreeReturn[] | undefined;
+    diskStatus?: DisksInfo;
 }
 
 interface ISSHCommandOutput {

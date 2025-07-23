@@ -12,7 +12,8 @@
     "uptime",
     "arrayinfo",
     "arrayused",
-    "cacheused"
+    "cacheused",
+    "disksactive"
   ],
   "platforms": [
     "local"

@@ -54,6 +54,25 @@ For each one of them you can trigger a flow. For example:
 
 You can do everything via flow cards or via API
 
+#### Active disks
+The app can report the number of active disks in the Unraid server via the metric **Disks active**. "Active" means the disk is spinning, "not active" means the disk is spun down (the motor is stopped).
+
+This metric can be used to control air conditioning. E.g. if your Unraid server regularly has long periods when no disks are spinning, you turn off the cooling or adjust the temperature setting to save power.
+
+This can be done with a flows similar to:
+
+_When_ **The number of active disks has changed** _and_ **The number of active disks is greater than 0**, _then_ **Turn on A/C**.
+
+_When_ **The number of active disks has changed** _and_ **The number of active disks is exactly 0**, _then_ **Turn off A/C**.
+
+##### The "Disks offset" setting
+
+This app uses `smartctl` to check which disks are active. It cannot currently distinguish between actual hard drives and SSDs, so the reported number includes both. SSDs are never "spun down", so they are always reported as active. 
+
+If your Unraid server has 10 hard drives and 2 SSDs, the app will report 12 active disks when all hard drives are spinning, and 2 active disks when all hard drives are spun down.
+
+If you want to exclude SSDs from the "disks active" metric, you can adjust the "Disks offset" setting. It should usually be set to a number equal to the number of SSDs in your Unraid server. This number will be subtracted from the "disks active" metric, ensuring the "disks active" metric reports zero when all hard drives are stopped.
+
 #### API Documentation
 
 ##### Operation List

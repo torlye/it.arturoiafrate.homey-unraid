@@ -7,6 +7,7 @@ interface DeviceTriggerCards {
     arrayUsageTriggerCard: FlowCardTriggerDevice
     cacheUsageTriggerCard: FlowCardTriggerDevice
     ramUsageTriggerCard: FlowCardTriggerDevice
+    disksActiveTriggerCard: FlowCardTriggerDevice
     dockerContainerStatusChangedTriggerCard : FlowCardTriggerDevice
 }
 
@@ -16,6 +17,7 @@ class UnraidRemoteFlowTrigger {
     private _cacheUsageIsChangedTriggerCard : FlowCardTriggerDevice;
     private _ramUsageIsChangedTriggerCard : FlowCardTriggerDevice;
     private _dockerContainerStatusChangedTriggerCard : FlowCardTriggerDevice;
+    private _disksActiveTriggerCard: FlowCardTriggerDevice;
     private _dockerMonitor : DockerMonitor;
 
     constructor(triggers : DeviceTriggerCards){
@@ -24,6 +26,7 @@ class UnraidRemoteFlowTrigger {
         this._cacheUsageIsChangedTriggerCard = triggers.cacheUsageTriggerCard;
         this._ramUsageIsChangedTriggerCard = triggers.ramUsageTriggerCard;
         this._dockerContainerStatusChangedTriggerCard = triggers.dockerContainerStatusChangedTriggerCard;
+        this._disksActiveTriggerCard = triggers.disksActiveTriggerCard;
         this._dockerMonitor = new DockerMonitor();
     }
 
@@ -41,6 +44,10 @@ class UnraidRemoteFlowTrigger {
 
     triggerRamUsageFlowCard(device: Homey.Device,ramUsage: number){
         this._ramUsageIsChangedTriggerCard?.trigger(device, { 'usage-percent': ramUsage }, undefined);
+    }
+
+    triggerDisksActiveFlowCard(device: Homey.Device, disksActive: number) {
+        this._disksActiveTriggerCard?.trigger(device, { 'active-disks': disksActive }, undefined);
     }
     
     async triggerDockerContainerStatusChangedFlowCard(device: Homey.Device, containers: Container[], appInstance? : UnraidRemoteApp){
